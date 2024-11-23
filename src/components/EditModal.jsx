@@ -30,7 +30,7 @@ const EditModal = ({ isOpen, onClose, data, onSave, title }) => {
             </label>
             <input
               name={key}
-              value={formData[key] || ""}
+              value={typeof formData[key] === 'object' ? JSON.stringify(formData[key]) : formData[key] || ""}
               onChange={handleChange}
               className="w-full border rounded p-2"
             />

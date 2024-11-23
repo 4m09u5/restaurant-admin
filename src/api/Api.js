@@ -17,7 +17,7 @@ export const logout = (token) =>
   api.post("/logout", {}, { headers: { Authorization: `Bearer ${token}` } });
 
 export const getOwnedRestaurants = (token) =>
-  api.get("/restaurant/owned", { 
+  api.get("/restaurant/owned", {
     headers: { Authorization: `Bearer ${token}` }
   });
 
@@ -30,5 +30,20 @@ export const getRestaurantAddresses = (restaurantId, token) =>
   api.get(`/restaurant/${restaurantId}/address`, {
     headers: { Authorization: `Bearer ${token}` },
   });
+
+export const updateRestaurant = (token, data) =>
+  api.put(`/restaurant`, data, {
+    headers: { Authorization: `Bearer ${token}` },
+  })
+
+export const updateAddress = (addressId, token, data) =>
+  api.put(`/address/${addressId}`, data, {
+    headers: { Authorization: `Bearer ${token}` },
+  })
+
+export const updateWorkingHours = (addressId, token, data) =>
+  api.post(`/address/${addressId}/working-hours`, { hours: data }, {
+    headers: { Authorization: `Bearer ${token}` },
+  })
 
 export default api;

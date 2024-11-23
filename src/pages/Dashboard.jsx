@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getOwnedRestaurants, logout } from "../api/Api";
+import { getOwnedRestaurants, updateRestaurant, logout } from "../api/Api";
 import RestaurantList from "../components/RestaurantList";
 import { useNavigate } from "react-router-dom";
 import EditModal from "../components/EditModal";
@@ -9,7 +9,7 @@ const Dashboard = ({ token, setToken }) => {
   const [restaurants, setRestaurants] = useState([]);
   const [editingRestaurant, setEditingRestaurant] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(null);
-  
+
   const handleLogout = async () => {
     try {
       await logout(token);
@@ -22,7 +22,7 @@ const Dashboard = ({ token, setToken }) => {
   };
 
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     if (token == "") {
       navigate("/")
@@ -43,14 +43,15 @@ const Dashboard = ({ token, setToken }) => {
     setEditingRestaurant(restaurant);
     setIsModalOpen(true);
   };
-  
+
   const handleSaveRestaurant = (updatedRestaurant) => {
     // Здесь будет API-запрос для сохранения изменений
+    updateRestaurant(token, updatedRestaurant)
     setRestaurants((prev) =>
       prev.map((rest) => (rest.id === updatedRestaurant.id ? updatedRestaurant : rest))
     );
   };
-  
+
 
   const handleAddresses = (restaurantId) => {
     navigate(`/restaurant/${restaurantId}/addresses`);
